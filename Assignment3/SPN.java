@@ -10,9 +10,11 @@ waitingTime
 turnaroundTime
 */
 public class SPN{
+	int i = 0;
+	int j = 0;
 	public Object[] ShortProc(Object[] proc)
 	{
-		int i =0;
+		
 		ArrayList procs = new ArrayList ();
 		for (i = 0; i<proc.length-1; i++ ) 
 		{
@@ -34,14 +36,17 @@ public class SPN{
 
 	public ArrayList<Object> SortST(ArrayList<Object> procSTsort)
 	{
-		for (i = 0; i<procSTsort.size()-1; i++ ) 
+		for (j = 0; j<procSTsort.size()-2; j++ ) 
 		{
-			if (procSTsort.get(i).serviceTime > procSTsort(i+1).serviceTime)
+			for (i = j+1; i<procSTsort.size()-1; i++ ) 
 			{
-				Object temp = procSTsort.get(i+1);
-				procSTsort.set(i+1, procSTsort.get(i) );
-				procSTsort.set(i, temp);
-			}	
+				if (procSTsort.get(j).serviceTime > procSTsort(i).serviceTime)
+				{
+					Object temp = procSTsort.get(i);
+					procSTsort.set(i, procSTsort.get(j) );
+					procSTsort.set(j, temp);
+				}	
+			}
 		}
 	}
 
@@ -49,14 +54,17 @@ public class SPN{
 
 	public ArrayList<Object> SortAT(ArrayList<Object> procATsort)
 	{
-		for (i = 0; i<procATsort.size()-1; i++ ) 
+		for (j = 0; j<procATsort.size()-2; j++ ) 
 		{
-			if (procATsort.get(i).arrivalTime > procATsort(i+1).arrivalTime)
+			for (i = j+1; i<procATsort.size()-1; i++ ) 
 			{
-				Object temp = procATsort.get(i+1);
-				procATsort.set(i+1, procATsort.get(i) );
-				procATsort.set(i, temp);
-			}	
+				if (procATsort.get(j).serviceTime > procATsort(i).serviceTime)
+				{
+					Object temp = procATsort.get(i);
+					procATsort.set(i, procATsort.get(j) );
+					procATsort.set(j, temp);
+				}	
+			}
 		}
 	}
 }
