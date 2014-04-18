@@ -8,18 +8,40 @@ serviceTime
 timeRemaining
 waitingTime
 turnaroundTime
+
+sort by arrival time
+execute 1st process 
+change attributes
+add to finished list
+remove from togo list
+
+sort by process time
+while togo.isempty != false
+
+change attributes
+add to finished list
+remove from togo list
+
+
 */
 public class SPN{
 	int i = 0;
 	int j = 0;
+	int totalProcessTime = 0;
+	ArrayList finProcs = new ArrayList();
+
 	public Object[] ShortProc(Object[] proc)
 	{
-		
 		ArrayList procs = new ArrayList ();
 		for (i = 0; i<proc.length-1; i++ ) 
 		{
 			procs.add(proc[i]);
 		}
+
+		SortAT(procs);
+		totalProcessTime = procs.get(0).arrivalTime;
+		procs.set
+
 
 		while(procs.isEmpty() != true)
 		{
