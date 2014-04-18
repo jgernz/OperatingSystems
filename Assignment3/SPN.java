@@ -11,7 +11,7 @@ turnaroundTime
 
 sort by arrival time
 execute 1st process 
-change attributes
+-change attributes
 add to finished list
 remove from togo list
 
@@ -39,23 +39,38 @@ public class SPN{
 		}
 
 		SortAT(procs);
-		totalProcessTime = procs.get(0).arrivalTime;
-		procs.set
 
+		totalProcessTime = procs.get(0).arrivalTime;
+		procs.get(0).waitingTime = totalProcessTime;
+		finProcs.add(procs.get(0));
+		procs.remove(0);
+
+		SortST(procs);
 
 		while(procs.isEmpty() != true)
 		{
-			//dance
+			bool executed=false;
+			for (i=0;i<procs.size()-1 ;i++ ) 
+			{
+				if(procs.get(i).arrivalTime == totalProcessTime)
+				{
+					procs.get(i).waitingTime = totalProcessTime;
+					finProcs.add(procs.get(i));
+					procs.remove(i);
+					executed=true;
+				}
+			}
+			if(executed==false)
+			{
+				totalProcessTime++;
+			}
 		}
-
-
-
-
+		return ( finProcs.toArray() )
 	}
 
-
-/////// Sort by Service Time
-
+//////////////////////////////////////////////////////////////////////
+///////////////////// Sort by Service Time ///////////////////////////
+//////////////////////////////////////////////////////////////////////
 	public ArrayList<Object> SortST(ArrayList<Object> procSTsort)
 	{
 		for (j = 0; j<procSTsort.size()-2; j++ ) 
@@ -72,8 +87,9 @@ public class SPN{
 		}
 	}
 
-/////// Sort by Arrival Time
-
+//////////////////////////////////////////////////////////////////////
+///////////////////// Sort by Arrival Time ///////////////////////////
+//////////////////////////////////////////////////////////////////////
 	public ArrayList<Object> SortAT(ArrayList<Object> procATsort)
 	{
 		for (j = 0; j<procATsort.size()-2; j++ ) 
