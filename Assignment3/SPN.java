@@ -96,7 +96,7 @@ public class SPN{
 		{
 			for (i = j+1; i<procATsort.size()-1; i++ ) 
 			{
-				if (procATsort.get(j).serviceTime > procATsort(i).serviceTime)
+				if (procATsort.get(j).arrivalTime > procATsort(i).arrivalTime)
 				{
 					Object temp = procATsort.get(i);
 					procATsort.set(i, procATsort.get(j) );
