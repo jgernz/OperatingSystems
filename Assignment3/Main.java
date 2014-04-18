@@ -18,7 +18,7 @@ public class Main {
 		int num = 0;
 
 		System.out.println("Please enter in how many processes you would like to create: ");
-		System.out.println(">> ");
+		System.out.print(">> ");
 
 		try{
 			num = scanner.nextInt();
