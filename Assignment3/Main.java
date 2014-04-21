@@ -47,13 +47,42 @@ public class Main {
 			}
 		}
 
-		Process[] processess = new Process[num];
+		Process[] processes = new Process[num];
 		
 		for(int i = 0; i<num; i++){
-			processess[i] = new Process();
+			processes[i] = new Process();
 		}
 		
+
+		Process[] modified = new Process[num];
+		modified = p.createCopy(processes);
 		
-		System.out.println(Arrays.toString(processess));
+		System.out.println("Before Modification");
+		System.out.println("Original:    " + Arrays.toString(processes));
+		System.out.println("Modififed: " + Arrays.toString(modified) + "\n");	
+		
+		modified = p.test(modified);
+		
+		System.out.println("After Modification");
+		System.out.println("Original:    " + Arrays.toString(processes));
+		System.out.println("Modififed: " + Arrays.toString(modified) + "\n");
+		
+		modified = p.createCopy(processes);
+		
+		System.out.println("After Reset");
+		System.out.println("Original:    " + Arrays.toString(processes));
+		System.out.println("Modififed: " + Arrays.toString(modified) + "\n");
+		
+		modified = p.test(modified);
+		
+		System.out.println("After Another Modification");
+		System.out.println("Original:    " + Arrays.toString(processes));
+		System.out.println("Modififed: " + Arrays.toString(modified) + "\n");
+		
+		modified = p.createCopy(processes);
+		
+		System.out.println("After Another Reset");
+		System.out.println("Original:    " + Arrays.toString(processes));
+		System.out.println("Modififed: " + Arrays.toString(modified) + "\n");
 	}			
 }
