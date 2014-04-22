@@ -62,12 +62,21 @@ public class Main {
 		Process[] copy = new Process[num];
 		copy = p.createCopy(processes);	
 
+		//RoundRobin rr = new RoundRobin(copy, 10);
 		
-		copy[0].setActiveTimes(1,1);
-		copy[0].setActiveTimes(8,9);
-		copy[1].setActiveTimes(0,2);
-		copy[2].setActiveTimes(8,2);
+		//rr.scheduleProcesses();
+		SPN s = new SPN();
+		Process[] derp = s.ShortProc(copy);
 		
-		System.out.println(Arrays.toString(copy));
+		for(int i = 0; i<derp.length; i++){
+			System.out.println(derp[i]);
+		}
+			
+		
+		//System.out.println(derp);
+		
+		//System.out.println(derp);
+		
+		//System.out.println(Arrays.toString(copy));
 	}			
 }
