@@ -13,7 +13,7 @@ public class SPN{
     public Process[] ShortProc(Process[] proc)
     {
         ArrayList<Process> procs = new ArrayList<Process>();
-        for (i = 0; i<proc.length-1; i++ ) 
+        for (i = 0; i<proc.length; i++ ) 
         {
             procs.add(proc[i]);
         }
@@ -57,7 +57,7 @@ public class SPN{
         	// Keeps track if a Process was executed
             boolean executed=false;
 
-            for (i=0;i<procs.size()-1 ;i++ ) 
+            for (i=0;i<procs.size() ;i++ ) 
             {
                 // find the next process to execute //
                 if(procs.get(i).getArrivalTime() < totalProcessTime)
@@ -133,9 +133,9 @@ public class SPN{
     // Puts smallest service time first
     public ArrayList<Process> SortST(ArrayList<Process> procSTsort)
     {
-        for (j = 0; j<procSTsort.size()-2; j++ ) 
+        for (j = 0; j<procSTsort.size(); j++ ) 
         {
-            for (i = j+1; i<procSTsort.size()-1; i++ ) 
+            for (i = j+1; i<procSTsort.size(); i++ ) 
             {
                 if (procSTsort.get(j).getServiceTime() > procSTsort.get(i).getServiceTime())
                 {
@@ -154,9 +154,9 @@ public class SPN{
     // Puts first arriving Process first
     public ArrayList<Process> SortAT(ArrayList<Process> procATsort)
     {
-        for (j = 0; j<procATsort.size()-2; j++ ) 
+        for (j = 0; j<procATsort.size(); j++ ) 
         {
-            for (i = j+1; i<procATsort.size()-1; i++ ) 
+            for (i = j+1; i<procATsort.size(); i++ ) 
             {
                 if (procATsort.get(j).getArrivalTime() > (procATsort.get(i)).getArrivalTime())
                 {
