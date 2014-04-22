@@ -4,20 +4,32 @@ import java.util.*;
  * @author rocolr37
  *
  */
-public class Process {
+public class Process implements Comparable<Process>{
 	private int arrivalTime, serviceTime, timeRemaining, waitingTime, turnaroundTime;
+	private String name;
+	private LinkedList<int[]> activity;
 	
-	public Process(){
+	
+	public Process(String name){
 		Random rand = new Random();
+		this.name = name;
 		arrivalTime = rand.nextInt(15);
 		serviceTime = rand.nextInt(60);
 		timeRemaining = serviceTime;
 		waitingTime = 0;
 		turnaroundTime = 0;
+		activity = new LinkedList<int[]>();
 	}
 	
-	
+	public void setActiveTimes(int startTime, int endTime){
+		int[] times = new int[2];
+		times[0] = startTime;
+		times[1] = endTime;
+		activity.add(times);
+	}
+
 	public int getArrivalTime(){
+		
 		return arrivalTime;
 	}
 	
@@ -33,11 +45,14 @@ public class Process {
 		return turnaroundTime;
 	}
 	
-	public int calculateTimeRemaining(int timePassed){
+	public void calculateTimeRemaining(int timePassed){
 		if(timePassed > timeRemaining){
 			timeRemaining = 0;
 		}
 		timeRemaining = timeRemaining - timePassed;
+	}
+	
+	public int getTimeRemaining(){
 		return timeRemaining;
 	}
 	
@@ -64,8 +79,9 @@ public class Process {
 		Process[] temp = new Process[processes.length];
 		int i = 0;
 		for(Process p: processes){
-			Process temp1 = new Process();
+			Process temp1 = new Process(" ");
 			
+			temp1.name = p.name;
 			temp1.arrivalTime = p.arrivalTime;
 			temp1.serviceTime = p.serviceTime;
 			temp1.timeRemaining = p.timeRemaining;
@@ -78,8 +94,13 @@ public class Process {
 		return temp;
 	}
 	
+	public int compareTo(Process compareProcess) {
+		int compareArrivalTime = ((Process) compareProcess).getArrivalTime();
+		return this.arrivalTime - compareArrivalTime;
+	}
 	
 	public String toString(){
-		return arrivalTime + " " + serviceTime + " " + timeRemaining + " " + waitingTime + " " + turnaroundTime;
+		return name + " " + arrivalTime + " " + serviceTime + " " + timeRemaining + " " + waitingTime + " " + turnaroundTime + " " 
+	+ Arrays.asList(activity).toString();
 	}
 }
