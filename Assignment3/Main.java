@@ -68,6 +68,11 @@ public class Main {
 		SPN s = new SPN();
 		Process[] derp = s.ShortProc(copy);
 		
+		
+		/*
+		Feedback f = new Feedback(copy, 10);
+		f.scheduleProcesses();
+		*/
 		for(int i = 0; i<derp.length; i++){
 			System.out.println(derp[i]);
 		}

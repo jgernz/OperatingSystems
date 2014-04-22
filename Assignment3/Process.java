@@ -27,6 +27,8 @@ public class Process implements Comparable<Process>{
 		times[1] = endTime;
 		activity.add(times);
 	}
+	
+	
 
 	public int getArrivalTime(){
 		
