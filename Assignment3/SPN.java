@@ -37,22 +37,27 @@ public class SPN extends Process{
         {
             procs.add(proc[i]);
         }
-
+        //Sort by arrival time
         procs = SortAT(procs);
+
         ////// First process that arrives //////
         totalProcessTime = 0;
         procs.get(0).setWaitingTime(0);
         totalProcessTime = totalProcessTime + procs.get(0).getServiceTime();
+
         // Add to finished processes and remove from Process list //
         finProcs.add(procs.get(0));
         procs.remove(0);
 
+        //Sort by service time
         procs = SortST(procs);
 
         // Keep executing until all processes have executed
         while(procs.isEmpty() != true)
         {
+        	// Keeps track if a Process was executed
             boolean executed=false;
+
             for (i=0;i<procs.size()-1 ;i++ ) 
             {
                 // find the next process to execute //
@@ -82,6 +87,7 @@ public class SPN extends Process{
                 totalProcessTime++;
             }
         }
+        // Change arraylist back to an Array and return it
         Process[] returnProcs = finProcs.toArray(new Process[finProcs.size()]);
         return ( returnProcs );
     }
@@ -89,6 +95,7 @@ public class SPN extends Process{
 //////////////////////////////////////////////////////////////////////
 ///////////////////// Sort by Service Time ///////////////////////////
 //////////////////////////////////////////////////////////////////////
+    // Puts smallest service time first
     public ArrayList<Process> SortST(ArrayList<Process> procSTsort)
     {
         for (j = 0; j<procSTsort.size()-2; j++ ) 
@@ -109,6 +116,7 @@ public class SPN extends Process{
 //////////////////////////////////////////////////////////////////////
 ///////////////////// Sort by Arrival Time ///////////////////////////
 //////////////////////////////////////////////////////////////////////
+    // Puts first arriving Process first
     public ArrayList<Process> SortAT(ArrayList<Process> procATsort)
     {
         for (j = 0; j<procATsort.size()-2; j++ ) 
