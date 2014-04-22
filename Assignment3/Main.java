@@ -15,7 +15,7 @@ public class Main {
 
 	public static void main (String args[]){
 		Scanner scanner = new Scanner(System.in);
-		Process p = new Process();
+		Process p = new Process(" ");
 		int num = 0;
 
 		System.out.println("Please enter in how many processes you would like to create: ");
@@ -50,7 +50,7 @@ public class Main {
 		Process[] processes = new Process[num];
 		
 		for(int i = 0; i<num; i++){
-			processes[i] = new Process();
+			processes[i] = new Process("'P" + i +"'");
 		}
 		
 
@@ -84,5 +84,12 @@ public class Main {
 		System.out.println("After Another Reset");
 		System.out.println("Original:    " + Arrays.toString(processes));
 		System.out.println("Modififed: " + Arrays.toString(modified) + "\n");
+		
+		processes[0].setActiveTimes(1,1);
+		processes[0].setActiveTimes(8,9);
+		processes[1].setActiveTimes(0,2);
+		processes[2].setActiveTimes(8,2);
+		
+		System.out.println(Arrays.toString(processes));
 	}			
 }

@@ -100,7 +100,12 @@ public class Process implements Comparable<Process>{
 	}
 	
 	public String toString(){
-		return name + " " + arrivalTime + " " + serviceTime + " " + timeRemaining + " " + waitingTime + " " + turnaroundTime + " " 
-	+ Arrays.asList(activity).toString();
+		System.out.println(name);
+		for(int[] l : activity){
+			System.out.println(Arrays.toString(l));
+		}
+		
+		
+		return " "; //arrivalTime + " " + serviceTime + " " + timeRemaining + " " + waitingTime + " " + turnaroundTime;
 	}
 }
