@@ -39,33 +39,50 @@ public class SPN{
 		}
 
 		SortAT(procs);
-
-		totalProcessTime = procs.get(0).arrivalTime;
-		procs.get(0).waitingTime = totalProcessTime;
+		////// First process that arrives //////
+		totalProcessTime = 0;
+		procs.get(0).waitingTime = 0;
+		totalProcessTime = totalProcessTime + procs.get(0).serviceTime;
+		// Add to finished processes and remove from Process list //
 		finProcs.add(procs.get(0));
 		procs.remove(0);
 
 		SortST(procs);
 
+		// Keep executing until all processes have executed
 		while(procs.isEmpty() != true)
 		{
-			bool executed=false;
+			boolean executed=false;
 			for (i=0;i<procs.size()-1 ;i++ ) 
 			{
-				if(procs.get(i).arrivalTime == totalProcessTime)
+				// find the next process to execute //
+				if(procs.get(i).arrivalTime < totalProcessTime)
 				{
-					procs.get(i).waitingTime = totalProcessTime;
+					procs.get(i).waitingTime = totalProcessTime - procs.get(i).arrivalTime;
+					totalProcessTime = totalProcessTime + procs.get(i).serviceTime;
 					finProcs.add(procs.get(i));
 					procs.remove(i);
 					executed=true;
+					break;
+				}
+				if(procs.get(i).arrivalTime == totalProcessTime)
+				{
+					procs.get(i).waitingTime = 0;
+					totalProcessTime = totalProcessTime + procs.get(i).serviceTime;
+					finProcs.add(procs.get(i));
+					procs.remove(i);
+					executed=true;
+					break;
 				}
 			}
+			// If executed == true then totalProcessTime has incremented already
+			// so no need to increment it again
 			if(executed==false)
 			{
 				totalProcessTime++;
 			}
 		}
-		return ( finProcs.toArray() )
+		return ( finProcs.toArray() );
 	}
 
 //////////////////////////////////////////////////////////////////////
@@ -77,12 +94,12 @@ public class SPN{
 		{
 			for (i = j+1; i<procSTsort.size()-1; i++ ) 
 			{
-				if (procSTsort.get(j).serviceTime > procSTsort(i).serviceTime)
+				if (procSTsort.get(j).serviceTime > procSTsort.get(i).serviceTime)
 				{
 					Object temp = procSTsort.get(i);
 					procSTsort.set(i, procSTsort.get(j) );
 					procSTsort.set(j, temp);
-				}	
+				}   
 			}
 		}
 	}
@@ -96,12 +113,12 @@ public class SPN{
 		{
 			for (i = j+1; i<procATsort.size()-1; i++ ) 
 			{
-				if (procATsort.get(j).arrivalTime > procATsort(i).arrivalTime)
+				if (procATsort.get(j).arrivalTime > (procATsort.get(i)).arrivalTime)
 				{
 					Object temp = procATsort.get(i);
 					procATsort.set(i, procATsort.get(j) );
 					procATsort.set(j, temp);
-				}	
+				}   
 			}
 		}
 	}
