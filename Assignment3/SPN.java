@@ -1,27 +1,10 @@
 import java.util.*;
-/*
-arrivalTime
-serviceTime
-timeRemaining
-waitingTime
-turnaroundTime
 
-sort by arrival time
-execute 1st process 
--change attributes
-add to finished list
-remove from togo list
-
-sort by process time
-while togo.isempty != false
-
-change attributes
-add to finished list
-remove from togo list
-
-
+/**
+* @author ganzej39
 */
-public class SPN extends Process{
+
+public class SPN{
     int i = 0;
     int j = 0;
     int totalProcessTime = 0;
@@ -34,19 +17,36 @@ public class SPN extends Process{
         {
             procs.add(proc[i]);
         }
+
         //Sort by arrival time
         procs = SortAT(procs);
 
+///////////////////////////////////////////////////////
         ////// First process that arrives //////
+
+        // Set total processing time to 0, it just started
         totalProcessTime = 0;
+
+        // No wait so waiting time is 0
         procs.get(0).setWaitingTime(0);
+
+        // Set active times
+        procs.get(0).setActiveTimes(0, procs.get(0).getServiceTime());
+
+        // Increase total process time
         totalProcessTime = totalProcessTime + procs.get(0).getServiceTime();
+
+        // Set turn around time
         procs.get(0).setTurnaroundTime(totalProcessTime);
 
+        // Set Time Remaining
+        procs.get(0).calculateTimeRemaining(procs.get(0).getServiceTime());
 
         // Add to finished processes and remove from Process list //
         finProcs.add(procs.get(0));
         procs.remove(0);
+
+///////////////////////////////////////////////////////
 
         //Sort by service time
         procs = SortST(procs);
@@ -64,6 +64,9 @@ public class SPN extends Process{
                 {
                 		// Set waiting time
                     procs.get(i).setWaitingTime(totalProcessTime - procs.get(i).getArrivalTime());
+
+                    // Set Active Times
+                    procs.get(i).setActiveTimes(totalProcessTime, (totalProcessTime + procs.get(i).getServiceTime()));
                     
                     // Increase totalProcessTime
                     totalProcessTime = totalProcessTime + procs.get(i).getServiceTime();
@@ -71,6 +74,9 @@ public class SPN extends Process{
                     // Set turn around time
                     procs.get(i).setTurnaroundTime(totalProcessTime + procs.get(i).getArrivalTime());
                     
+                    // Set Time Remaining
+                    procs.get(i).calculateTimeRemaining(procs.get(i).getServiceTime());
+
                     // Add Process to finished processes
                     finProcs.add(procs.get(i));
                     
@@ -86,12 +92,18 @@ public class SPN extends Process{
                 		// Set waiting time
                     procs.get(i).setWaitingTime(0);
 
+                    // Set Active Times
+                    procs.get(i).setActiveTimes(totalProcessTime, (totalProcessTime + procs.get(i).getServiceTime()));
+
                    	// Increase totalProcessTime
                     totalProcessTime = totalProcessTime + procs.get(i).getServiceTime();
-                    
+
                     // Set turn around time
                     procs.get(i).setTurnaroundTime(totalProcessTime + procs.get(i).getArrivalTime());
                     
+                    // Set Time Remaining
+                    procs.get(i).calculateTimeRemaining(procs.get(i).getServiceTime());
+
                     // Add Process to finished processes
                     finProcs.add(procs.get(i));
                     
