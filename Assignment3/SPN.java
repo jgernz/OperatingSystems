@@ -38,7 +38,7 @@ public class SPN extends Process{
             procs.add(proc[i]);
         }
 
-        SortAT(procs);
+        procs = SortAT(procs);
         ////// First process that arrives //////
         totalProcessTime = 0;
         procs.get(0).setWaitingTime(0);
@@ -47,7 +47,7 @@ public class SPN extends Process{
         finProcs.add(procs.get(0));
         procs.remove(0);
 
-        SortST(procs);
+        procs = SortST(procs);
 
         // Keep executing until all processes have executed
         while(procs.isEmpty() != true)
@@ -82,7 +82,8 @@ public class SPN extends Process{
                 totalProcessTime++;
             }
         }
-        return ( finProcs.toArray() );
+        Process[] returnProcs = finProcs.toArray(new Process[finProcs.size()]);
+        return ( returnProcs );
     }
 
 //////////////////////////////////////////////////////////////////////
@@ -94,14 +95,15 @@ public class SPN extends Process{
         {
             for (i = j+1; i<procSTsort.size()-1; i++ ) 
             {
-                if (procSTsort.get(j).serviceTime > procSTsort.get(i).serviceTime)
+                if (procSTsort.get(j).getServiceTime() > procSTsort.get(i).getServiceTime())
                 {
-                    Object temp = procSTsort.get(i);
+                    Process temp = procSTsort.get(i);
                     procSTsort.set(i, procSTsort.get(j) );
                     procSTsort.set(j, temp);
                 }   
             }
         }
+        return procSTsort;
     }
 
 //////////////////////////////////////////////////////////////////////
@@ -113,13 +115,14 @@ public class SPN extends Process{
         {
             for (i = j+1; i<procATsort.size()-1; i++ ) 
             {
-                if (procATsort.get(j).arrivalTime > (procATsort.get(i)).arrivalTime)
+                if (procATsort.get(j).getArrivalTime() > (procATsort.get(i)).getArrivalTime())
                 {
-                    Object temp = procATsort.get(i);
+                    Process temp = procATsort.get(i);
                     procATsort.set(i, procATsort.get(j) );
                     procATsort.set(j, temp);
                 }   
             }
         }
+        return procATsort;
     }
 }
