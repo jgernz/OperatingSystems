@@ -5,7 +5,7 @@ import java.util.*;
  *
  */
 public class Process implements Comparable<Process>{
-	private int arrivalTime, serviceTime, timeRemaining, waitingTime, turnaroundTime;
+	private int arrivalTime, serviceTime, timeRemaining, waitingTime, turnaroundTime, finishTime;
 	private String name;
 	private LinkedList<int[]> activity;
 	
@@ -45,6 +45,10 @@ public class Process implements Comparable<Process>{
 		return turnaroundTime;
 	}
 	
+	public int getFinishTime(){
+		return finishTime;
+	}
+	
 	public void calculateTimeRemaining(int timePassed){
 		if(timePassed > timeRemaining){
 			timeRemaining = 0;
@@ -62,6 +66,10 @@ public class Process implements Comparable<Process>{
 	
 	public void setTurnaroundTime(int time){
 		turnaroundTime = time;
+	}
+	
+	public void setFinishTime(int time){
+		finishTime = time;
 	}
 
 	public Process[] test(Process[] processes){
@@ -99,6 +107,12 @@ public class Process implements Comparable<Process>{
 		return this.arrivalTime - compareArrivalTime;
 	}
 	
+	public void print(Process[] process){
+		for(int[] l : this.activity){
+			System.out.println(Arrays.toString(l));
+		}
+	}
+	
 	public String toString(){
 		System.out.println(name);
 		for(int[] l : activity){
@@ -106,6 +120,9 @@ public class Process implements Comparable<Process>{
 		}
 		
 		
-		return " "; //arrivalTime + " " + serviceTime + " " + timeRemaining + " " + waitingTime + " " + turnaroundTime;
+		return "Arrival Time: " + arrivalTime + "\n" +
+				"Service Time: " + serviceTime + "\n" + 
+				"Waiting Time: " + waitingTime + "\n" +
+				"Turnaround Time: " + turnaroundTime + "\n\n";
 	}
 }

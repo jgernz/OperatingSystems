@@ -16,11 +16,14 @@ public class Main {
 	public static void main (String args[]){
 		Scanner scanner = new Scanner(System.in);
 		Process p = new Process(" ");
+		
 		int num = 0;
 
+		//Asking for user input
 		System.out.println("Please enter in how many processes you would like to create: ");
 		System.out.print(">> ");
 
+		//Making sure user input is valid
 		try{
 			num = scanner.nextInt();
 			if(num < 0){
@@ -47,49 +50,33 @@ public class Main {
 			}
 		}
 
+		//Creating a new array of processes
 		Process[] processes = new Process[num];
 		
+		//Populating the array with new processes
 		for(int i = 0; i<num; i++){
 			processes[i] = new Process("'P" + i +"'");
 		}
 		
+		//Creating a deep copy of the process array
+		Process[] copy = new Process[num];
+		copy = p.createCopy(processes);	
 
-		Process[] modified = new Process[num];
-		modified = p.createCopy(processes);
+		//RoundRobin rr = new RoundRobin(copy, 10);
 		
-		System.out.println("Before Modification");
-		System.out.println("Original:    " + Arrays.toString(processes));
-		System.out.println("Modififed: " + Arrays.toString(modified) + "\n");	
+		//rr.scheduleProcesses();
+		SPN s = new SPN();
+		Process[] derp = s.ShortProc(copy);
 		
-		modified = p.test(modified);
+		for(int i = 0; i<derp.length; i++){
+			System.out.println(derp[i]);
+		}
+			
 		
-		System.out.println("After Modification");
-		System.out.println("Original:    " + Arrays.toString(processes));
-		System.out.println("Modififed: " + Arrays.toString(modified) + "\n");
+		//System.out.println(derp);
 		
-		modified = p.createCopy(processes);
+		//System.out.println(derp);
 		
-		System.out.println("After Reset");
-		System.out.println("Original:    " + Arrays.toString(processes));
-		System.out.println("Modififed: " + Arrays.toString(modified) + "\n");
-		
-		modified = p.test(modified);
-		
-		System.out.println("After Another Modification");
-		System.out.println("Original:    " + Arrays.toString(processes));
-		System.out.println("Modififed: " + Arrays.toString(modified) + "\n");
-		
-		modified = p.createCopy(processes);
-		
-		System.out.println("After Another Reset");
-		System.out.println("Original:    " + Arrays.toString(processes));
-		System.out.println("Modififed: " + Arrays.toString(modified) + "\n");
-		
-		processes[0].setActiveTimes(1,1);
-		processes[0].setActiveTimes(8,9);
-		processes[1].setActiveTimes(0,2);
-		processes[2].setActiveTimes(8,2);
-		
-		System.out.println(Arrays.toString(processes));
+		//System.out.println(Arrays.toString(copy));
 	}			
 }
