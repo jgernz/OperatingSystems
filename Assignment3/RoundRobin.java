@@ -21,8 +21,11 @@ public class RoundRobin {
 		}
 		
 		//for each process in the queue, run it for quantum-calculated amount of time
-		for(int i = 0; i < queue.size(); i++){
-			
+		while(queue.peek() != null){
+			Process process = queue.poll();
+			while(currentTime < process.getArrivalTime()){
+				currentTime++;
+			}
 			//record time burst starts
 			int activeStart = currentTime;
 			
@@ -36,7 +39,9 @@ public class RoundRobin {
 			}
 			
 			//"Run" process
-			while(currentTime < burstTime){
+			int j = 0;
+			while(j < burstTime){
+				j++;
 				currentTime++;
 			}
 			
@@ -46,10 +51,18 @@ public class RoundRobin {
 			//update waiting times for other processes
 			for(int i = 0; i < processes.length; i++){
 				if(!(processes[i].equals(process))){
-					processes[i].setWaitingTime(processes[i].getWaitingTime() + burstTime);
+				if(processes[i].getFinishTime() == 0){
+					if(currentTime >= processes[i].getArrivalTime()){
+						if(processes[i].getWaitingTime() == 0){
+							processes[i].setWaitingTime(currentTime - processes[i].getArrivalTime());
+						}
+						else{
+							processes[i].setWaitingTime(processes[i].getWaitingTime() + burstTime);
+						}
+					}
+				}
 				}
 			}
-			
 			//update active time
 			process.setActiveTimes(activeStart, activeFinish);
 			
@@ -58,27 +71,31 @@ public class RoundRobin {
 			
 			if(process.getTimeRemaining() > 0){
 			//move process to the back of the queue
-			  queue.remove(process);
-			  queue.add(process);
+			  queue.offer(process);
 			}
 			
 			else{
 			//if process is finished, record finish time, remove it from the queue
 				process.setFinishTime(currentTime);
-				queue.remove(process);
 				
 			//update turn-around time
-				process.setTurnaroundTime(currentTime);
+				process.setTurnaroundTime(currentTime - process.getArrivalTime());
 			}
 		}
 	}
 	
 	public Process[] scheduleProcesses(){
 		runScheduler();
+		printWaitingTimes();
+		printAvgWaitingTime();
+		printTurnaroundTimes();
+		printAvgTurnaroundTimes();
+		printNormalizedTurnaroundTimes();
+		printFinishTimes();
 		return processes;
 	}
 	
-	public void printWaitingTimes(){
+	private void printWaitingTimes(){
 		//print waiting times
 		System.out.println("Waiting Times: ");
 		for(Process process: processes){
@@ -86,7 +103,7 @@ public class RoundRobin {
 		}
 	}
 	
-	public void printAvgWaitingTime(){
+	private void printAvgWaitingTime(){
 		//calculate average waiting time
 		int sum = 0;
 		for(int i = 0; i < processes.length; i++){
@@ -97,7 +114,7 @@ public class RoundRobin {
 		System.out.println("Average Waiting Time: " + avg);
 	}
 	
-	public void printTurnaroundTimes(){
+	private void printTurnaroundTimes(){
 		//print turn-around times
 		System.out.println("Turn-Around Times: ");
 		for(Process process: processes){
@@ -105,7 +122,7 @@ public class RoundRobin {
 		}
 	}
 	
-	public void printAvgTurnaroundTimes(){
+	private void printAvgTurnaroundTimes(){
 		//Calculate average turn-around time
 		int sum = 0;
 		for(int i = 0; i < processes.length; i++){
@@ -116,12 +133,12 @@ public class RoundRobin {
 		System.out.println("Average Turnaround Time: " + avg);
 	}
 	
-	public void printNormalizedTurnaroundTimes(){
+	private void printNormalizedTurnaroundTimes(){
 		//find normalized turn-around times, whatever that is
 		//print them out
 	}
 	
-	public void printFinishTimes(){
+	private void printFinishTimes(){
 		//print finish times
 		System.out.println("Finish Times: ");
 		for(Process process: processes){
