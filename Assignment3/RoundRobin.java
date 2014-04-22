@@ -21,7 +21,7 @@ public class RoundRobin {
 		}
 		
 		//for each process in the queue, run it for quantum-calculated amount of time
-		for(Process process: queue){
+		for(int i = 0; i < queue.size(); i++){
 			
 			//record time burst starts
 			int activeStart = currentTime;
