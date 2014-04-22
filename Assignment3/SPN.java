@@ -1,6 +1,3 @@
-
-import java.lang.*;
-import java.io.*;
 import java.util.*;
 /*
 arrivalTime
@@ -37,40 +34,71 @@ public class SPN extends Process{
         {
             procs.add(proc[i]);
         }
+        //Sort by arrival time
+        procs = SortAT(procs);
 
-        SortAT(procs);
         ////// First process that arrives //////
         totalProcessTime = 0;
         procs.get(0).setWaitingTime(0);
         totalProcessTime = totalProcessTime + procs.get(0).getServiceTime();
+        procs.get(0).setTurnaroundTime(totalProcessTime);
+
+
         // Add to finished processes and remove from Process list //
         finProcs.add(procs.get(0));
         procs.remove(0);
 
-        SortST(procs);
+        //Sort by service time
+        procs = SortST(procs);
 
         // Keep executing until all processes have executed
         while(procs.isEmpty() != true)
         {
+        	// Keeps track if a Process was executed
             boolean executed=false;
+
             for (i=0;i<procs.size()-1 ;i++ ) 
             {
                 // find the next process to execute //
                 if(procs.get(i).getArrivalTime() < totalProcessTime)
                 {
+                		// Set waiting time
                     procs.get(i).setWaitingTime(totalProcessTime - procs.get(i).getArrivalTime());
+                    
+                    // Increase totalProcessTime
                     totalProcessTime = totalProcessTime + procs.get(i).getServiceTime();
+                    
+                    // Set turn around time
+                    procs.get(i).setTurnaroundTime(totalProcessTime + procs.get(i).getArrivalTime());
+                    
+                    // Add Process to finished processes
                     finProcs.add(procs.get(i));
+                    
+                    // Remove Process from Processes to be finished list
                     procs.remove(i);
+                    
+                    // Process was executed - set to true
                     executed=true;
                     break;
                 }
                 if(procs.get(i).getArrivalTime() == totalProcessTime)
                 {
+                		// Set waiting time
                     procs.get(i).setWaitingTime(0);
+
+                   	// Increase totalProcessTime
                     totalProcessTime = totalProcessTime + procs.get(i).getServiceTime();
+                    
+                    // Set turn around time
+                    procs.get(i).setTurnaroundTime(totalProcessTime + procs.get(i).getArrivalTime());
+                    
+                    // Add Process to finished processes
                     finProcs.add(procs.get(i));
+                    
+                    // Remove Process from Processes to be finished list
                     procs.remove(i);
+                    
+                    // Process was executed - set to true
                     executed=true;
                     break;
                 }
@@ -82,44 +110,50 @@ public class SPN extends Process{
                 totalProcessTime++;
             }
         }
-        return ( finProcs.toArray() );
+        // Change arraylist back to an Array and return it
+        Process[] returnProcs = finProcs.toArray(new Process[finProcs.size()]);
+        return ( returnProcs );
     }
 
 //////////////////////////////////////////////////////////////////////
 ///////////////////// Sort by Service Time ///////////////////////////
 //////////////////////////////////////////////////////////////////////
+    // Puts smallest service time first
     public ArrayList<Process> SortST(ArrayList<Process> procSTsort)
     {
         for (j = 0; j<procSTsort.size()-2; j++ ) 
         {
             for (i = j+1; i<procSTsort.size()-1; i++ ) 
             {
-                if (procSTsort.get(j).serviceTime > procSTsort.get(i).serviceTime)
+                if (procSTsort.get(j).getServiceTime() > procSTsort.get(i).getServiceTime())
                 {
-                    Object temp = procSTsort.get(i);
+                    Process temp = procSTsort.get(i);
                     procSTsort.set(i, procSTsort.get(j) );
                     procSTsort.set(j, temp);
                 }   
             }
         }
+        return procSTsort;
     }
 
 //////////////////////////////////////////////////////////////////////
 ///////////////////// Sort by Arrival Time ///////////////////////////
 //////////////////////////////////////////////////////////////////////
+    // Puts first arriving Process first
     public ArrayList<Process> SortAT(ArrayList<Process> procATsort)
     {
         for (j = 0; j<procATsort.size()-2; j++ ) 
         {
             for (i = j+1; i<procATsort.size()-1; i++ ) 
             {
-                if (procATsort.get(j).arrivalTime > (procATsort.get(i)).arrivalTime)
+                if (procATsort.get(j).getArrivalTime() > (procATsort.get(i)).getArrivalTime())
                 {
-                    Object temp = procATsort.get(i);
+                    Process temp = procATsort.get(i);
                     procATsort.set(i, procATsort.get(j) );
                     procATsort.set(j, temp);
                 }   
             }
         }
+        return procATsort;
     }
 }
