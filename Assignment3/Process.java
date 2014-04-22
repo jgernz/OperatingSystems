@@ -120,7 +120,7 @@ public class Process implements Comparable<Process>{
 		}
 		
 		
-		return "Waiting Time: " + arrivalTime + "\n" +
+		return "Arrival Time: " + arrivalTime + "\n" +
 				"Service Time: " + serviceTime + "\n" + 
 				"Waiting Time: " + waitingTime + "\n" +
 				"Turnaround Time: " + turnaroundTime + "\n\n";
