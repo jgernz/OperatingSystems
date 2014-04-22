@@ -1,6 +1,3 @@
-
-import java.lang.*;
-import java.io.*;
 import java.util.*;
 /*
 arrivalTime
@@ -44,6 +41,8 @@ public class SPN extends Process{
         totalProcessTime = 0;
         procs.get(0).setWaitingTime(0);
         totalProcessTime = totalProcessTime + procs.get(0).getServiceTime();
+        procs.get(0).setTurnaroundTime(totalProcessTime);
+
 
         // Add to finished processes and remove from Process list //
         finProcs.add(procs.get(0));
@@ -63,19 +62,43 @@ public class SPN extends Process{
                 // find the next process to execute //
                 if(procs.get(i).getArrivalTime() < totalProcessTime)
                 {
+                		// Set waiting time
                     procs.get(i).setWaitingTime(totalProcessTime - procs.get(i).getArrivalTime());
+                    
+                    // Increase totalProcessTime
                     totalProcessTime = totalProcessTime + procs.get(i).getServiceTime();
+                    
+                    // Set turn around time
+                    procs.get(i).setTurnaroundTime(totalProcessTime + procs.get(i).getArrivalTime());
+                    
+                    // Add Process to finished processes
                     finProcs.add(procs.get(i));
+                    
+                    // Remove Process from Processes to be finished list
                     procs.remove(i);
+                    
+                    // Process was executed - set to true
                     executed=true;
                     break;
                 }
                 if(procs.get(i).getArrivalTime() == totalProcessTime)
                 {
+                		// Set waiting time
                     procs.get(i).setWaitingTime(0);
+
+                   	// Increase totalProcessTime
                     totalProcessTime = totalProcessTime + procs.get(i).getServiceTime();
+                    
+                    // Set turn around time
+                    procs.get(i).setTurnaroundTime(totalProcessTime + procs.get(i).getArrivalTime());
+                    
+                    // Add Process to finished processes
                     finProcs.add(procs.get(i));
+                    
+                    // Remove Process from Processes to be finished list
                     procs.remove(i);
+                    
+                    // Process was executed - set to true
                     executed=true;
                     break;
                 }
