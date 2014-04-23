@@ -1,15 +1,26 @@
 import java.util.*;
 
 /**
-* @author ganzej39
-*/
-
+ * @author Josh Gerner
+ * @author Rachel Rocole
+ * @author James Ganzer
+ * @author Berkley Lamb
+ * @author Corey Schmitz
+ * @author Brandon Harshaw
+ * @author Jacob Ahnert
+ * @version(20140417)
+ */
 public class SPN{
     int i = 0;
     int j = 0;
     int totalProcessTime = 0;
     ArrayList<Process> finProcs = new ArrayList<Process>();
 
+    /**
+     * Run the non-preemptive Shortest Process Scheduler Algorithm
+     * @param proc
+     * @return
+     */
     public Process[] ShortProc(Process[] proc)
     {
         ArrayList<Process> procs = new ArrayList<Process>();
@@ -127,10 +138,11 @@ public class SPN{
         return ( returnProcs );
     }
 
-//////////////////////////////////////////////////////////////////////
-///////////////////// Sort by Service Time ///////////////////////////
-//////////////////////////////////////////////////////////////////////
-    // Puts smallest service time first
+    /**
+     * Sorts by Service Time-Smallest service time first
+     * @param procSTsort
+     * @return
+     */
     public ArrayList<Process> SortST(ArrayList<Process> procSTsort)
     {
         for (j = 0; j<procSTsort.size(); j++ ) 
@@ -148,10 +160,11 @@ public class SPN{
         return procSTsort;
     }
 
-//////////////////////////////////////////////////////////////////////
-///////////////////// Sort by Arrival Time ///////////////////////////
-//////////////////////////////////////////////////////////////////////
-    // Puts first arriving Process first
+    /**
+     * Sorts by arrival Time-Smallest arrival time first
+     * @param procATsort
+     * @return
+     */
     public ArrayList<Process> SortAT(ArrayList<Process> procATsort)
     {
         for (j = 0; j<procATsort.size(); j++ ) 
