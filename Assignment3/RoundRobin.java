@@ -1,16 +1,32 @@
 import java.util.*;
-
-
+/**
+ * @author Josh Gerner
+ * @author Rachel Rocole
+ * @author James Ganzer
+ * @author Berkley Lamb
+ * @author Corey Schmitz
+ * @author Brandon Harshaw
+ * @author Jacob Ahnert
+ * @version(20140417)
+ */
 public class RoundRobin {
 	Process[] processes;
 	private int quantum, currentTime;
 	
+	/**
+	 * Constructor for class Round Robin
+	 * @param processes
+	 * @param quantum
+	 */
 	public RoundRobin(Process[] processes, int quantum){
 		this.processes = processes;
 		this.quantum  = quantum;
 		currentTime = 0;
 	}
 	
+	/**
+	 * Run the Round Robin Scheduling Algorithm
+	 */
 	private void runScheduler(){
 		Arrays.sort(processes);
 		
@@ -54,6 +70,10 @@ public class RoundRobin {
 				if(processes[i].getFinishTime() == 0){
 					if(currentTime >= processes[i].getArrivalTime()){
 						if(processes[i].getWaitingTime() == 0){
+							if(processes[i].getArrivalTime() < process.getArrivalTime()){
+								processes[i].setWaitingTime(processes[i].getWaitingTime() + burstTime);
+							}
+							else
 							processes[i].setWaitingTime(currentTime - processes[i].getArrivalTime());
 						}
 						else{
@@ -84,17 +104,23 @@ public class RoundRobin {
 		}
 	}
 	
+	/**
+	 * Calls methods to run algorithm and print metrics
+	 * @return processes
+	 */
 	public Process[] scheduleProcesses(){
 		runScheduler();
 		printWaitingTimes();
 		printAvgWaitingTime();
 		printTurnaroundTimes();
 		printAvgTurnaroundTimes();
-		printNormalizedTurnaroundTimes();
 		printFinishTimes();
 		return processes;
 	}
 	
+	/**
+	 * Prints waiting Times for each process
+	 */
 	private void printWaitingTimes(){
 		//print waiting times
 		System.out.println("Waiting Times: ");
@@ -103,6 +129,9 @@ public class RoundRobin {
 		}
 	}
 	
+	/**
+	 * Calculates and prints average waiting time for schedule
+	 */
 	private void printAvgWaitingTime(){
 		//calculate average waiting time
 		int sum = 0;
@@ -114,6 +143,9 @@ public class RoundRobin {
 		System.out.println("Average Waiting Time: " + avg);
 	}
 	
+	/**
+	 * Prints turn-around times for each process
+	 */
 	private void printTurnaroundTimes(){
 		//print turn-around times
 		System.out.println("Turn-Around Times: ");
@@ -122,6 +154,9 @@ public class RoundRobin {
 		}
 	}
 	
+	/**
+	 * Calculates and prints average turn-around time
+	 */
 	private void printAvgTurnaroundTimes(){
 		//Calculate average turn-around time
 		int sum = 0;
@@ -133,11 +168,9 @@ public class RoundRobin {
 		System.out.println("Average Turnaround Time: " + avg);
 	}
 	
-	private void printNormalizedTurnaroundTimes(){
-		//find normalized turn-around times, whatever that is
-		//print them out
-	}
-	
+	/**
+	 * Prints finish times for each process
+	 */
 	private void printFinishTimes(){
 		//print finish times
 		System.out.println("Finish Times: ");
