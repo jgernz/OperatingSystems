@@ -26,48 +26,29 @@ public class FCFS
 		while(queue.peek() != null)
 		{
 			Process process = queue.poll();
-			while(currentTime < process.getArrivalTime())
-			{
+			while(currentTime < process.getArrivalTime()){
 				currentTime++;
 			}
+			//record time burst starts
 			int activeStart = currentTime;
-			int burstTime;
-			if(process.getTimeRemaining() < quantum)
-			{
-				burstTime = process.getTimeRemaining();
-			}
-			else
-			{
-				burstTime = quantum;
-			}
-			int j = 0;
 			while(j < burstTime)
 			{
 				j++;
 				currentTime++;
 			}
 			int activeFinish = currentTime;
-			for(int i = 0; i < processes.length; i++)
-			{
-				if(!(processes[i].equals(process)))
-				{
-					if(processes[i].getFinishTime() == 0)
-					{
-						if(currentTime >= processes[i].getArrivalTime())
-						{
-							if(processes[i].getWaitingTime() == 0)
-							{
-								if(processes[i].getArrivalTime() < process.getArrivalTime())
-								{
+			for(int i = 0; i < processes.length; i++){
+				if(!(processes[i].equals(process))){
+					if(processes[i].getFinishTime() == 0){
+						if(currentTime >= processes[i].getArrivalTime()){
+							if(processes[i].getWaitingTime() == 0){
+								if(processes[i].getArrivalTime() < process.getArrivalTime()){
+									processes[i].setWaitingTime(processes[i].getWaitingTime() + burstTime);
+								}else{
+									processes[i].setWaitingTime(currentTime - processes[i].getArrivalTime());
+								}else{
 									processes[i].setWaitingTime(processes[i].getWaitingTime() + burstTime);
 								}
-								else
-								{
-									processes[i].setWaitingTime(currentTime - processes[i].getArrivalTime());
-								}
-							else
-							{
-								processes[i].setWaitingTime(processes[i].getWaitingTime() + burstTime);
 							}
 						}
 					}
@@ -75,17 +56,11 @@ public class FCFS
 			}
 			//update active time
 			process.setActiveTimes(activeStart, activeFinish);
-			//update remaining time for process
-			process.calculateTimeRemaining(burstTime);
-			if(process.getTimeRemaining() > 0){
-			  //move process to the back of the queue
-			  queue.offer(process);
-			}else{
-				//if process is finished, record finish time, remove it from the queue
-				process.setFinishTime(currentTime);
-				//update turn-around time
-				process.setTurnaroundTime(currentTime - process.getArrivalTime());
-			}
+			//if process is finished, record finish time, remove it from the queue
+			process.setFinishTime(currentTime);
+			//update turn-around time
+			process.setTurnaroundTime(currentTime - process.getArrivalTime());
+		
 		}
 	}
 
