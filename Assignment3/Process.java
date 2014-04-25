@@ -23,7 +23,7 @@ public class Process implements Comparable<Process>{
 		Random rand = new Random();
 		this.name = name;
 		arrivalTime = rand.nextInt(15);
-		serviceTime = rand.nextInt(50);
+		serviceTime = rand.nextInt(50) + 20;
 		timeRemaining = serviceTime;
 		waitingTime = 0;
 		turnaroundTime = 0;
