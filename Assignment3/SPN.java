@@ -42,7 +42,7 @@ public class SPN{
         procs.get(0).setWaitingTime(0);
 
         // Set active times
-        procs.get(0).setActiveTimes(0, procs.get(0).getServiceTime());
+        procs.get(0).setActiveTimes(procs.get(0).getArrivalTime(), procs.get(0).getServiceTime()+procs.get(0).getArrivalTime());
 
         // Increase total process time
         totalProcessTime = totalProcessTime + procs.get(0).getServiceTime();
