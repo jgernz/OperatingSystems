@@ -23,7 +23,7 @@ public class Process implements Comparable<Process>{
 		Random rand = new Random();
 		this.name = name;
 		arrivalTime = rand.nextInt(15);
-		serviceTime = rand.nextInt(60);
+		serviceTime = rand.nextInt(50) + 20;
 		timeRemaining = serviceTime;
 		waitingTime = 0;
 		turnaroundTime = 0;
@@ -163,6 +163,25 @@ public class Process implements Comparable<Process>{
 		}
 	}
 
+	public ArrayList print(Process p){
+		ArrayList list = new ArrayList();
+		list.add(p.name);
+		
+//		ArrayList a = new ArrayList();
+//		for(int[] l : p.activity){		
+//			a.add(Arrays.toString(l));
+//		}
+		
+		list.add(p.activity);
+		list.add(p.arrivalTime);
+		list.add(p.serviceTime);
+		list.add(p.waitingTime);
+		list.add(p.turnaroundTime);
+		
+		return list;
+	}
+	
+	
 	public String toString(){
 		System.out.println(name);
 		for(int[] l : activity){

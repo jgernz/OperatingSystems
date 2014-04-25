@@ -81,16 +81,20 @@ public class Feedback{
 			//update waiting times for other processes
 			for(int i = 0; i < processes.length; i++){
 				if(!(processes[i].equals(p))){
-					if(processes[i].getFinishTime() == 0){
-						if(currentTime >= processes[i].getArrivalTime()){
-							if(processes[i].getWaitingTime() == 0){
-								processes[i].setWaitingTime(currentTime - processes[i].getArrivalTime());
-							}
-							else{
+				if(processes[i].getFinishTime() == 0){
+					if(currentTime >= processes[i].getArrivalTime()){
+						if(processes[i].getWaitingTime() == 0){
+							if(processes[i].getArrivalTime() < p.getArrivalTime()){
 								processes[i].setWaitingTime(processes[i].getWaitingTime() + burst);
 							}
+							else
+							processes[i].setWaitingTime(currentTime - processes[i].getArrivalTime());
+						}
+						else{
+							processes[i].setWaitingTime(processes[i].getWaitingTime() + burst);
 						}
 					}
+				}
 				}
 			}
 
@@ -135,16 +139,20 @@ public class Feedback{
 			//update waiting times for other processes
 			for(int i = 0; i < processes.length; i++){
 				if(!(processes[i].equals(p))){
-					if(processes[i].getFinishTime() == 0){
-						if(currentTime >= processes[i].getArrivalTime()){
-							if(processes[i].getWaitingTime() == 0){
-								processes[i].setWaitingTime(currentTime - processes[i].getArrivalTime());
-							}
-							else{
+				if(processes[i].getFinishTime() == 0){
+					if(currentTime >= processes[i].getArrivalTime()){
+						if(processes[i].getWaitingTime() == 0){
+							if(processes[i].getArrivalTime() < p.getArrivalTime()){
 								processes[i].setWaitingTime(processes[i].getWaitingTime() + burst);
 							}
+							else
+							processes[i].setWaitingTime(currentTime - processes[i].getArrivalTime());
+						}
+						else{
+							processes[i].setWaitingTime(processes[i].getWaitingTime() + burst);
 						}
 					}
+				}
 				}
 			}
 
@@ -152,7 +160,7 @@ public class Feedback{
 
 			p.calculateTimeRemaining(burst);
 
-			p.setActiveTimes(activeStart+quantum, activeFinish);
+			p.setActiveTimes(activeStart, activeFinish);
 			//if finished set finish time else add to next queue
 			if(p.getTimeRemaining()==0){
 				p.setFinishTime(currentTime);
@@ -193,16 +201,20 @@ public class Feedback{
 			//update waiting times for other processes
 			for(int i = 0; i < processes.length; i++){
 				if(!(processes[i].equals(p))){
-					if(processes[i].getFinishTime() == 0){
-						if(currentTime >= processes[i].getArrivalTime()){
-							if(processes[i].getWaitingTime() == 0){
-								processes[i].setWaitingTime(currentTime - processes[i].getArrivalTime());
-							}
-							else{
+				if(processes[i].getFinishTime() == 0){
+					if(currentTime >= processes[i].getArrivalTime()){
+						if(processes[i].getWaitingTime() == 0){
+							if(processes[i].getArrivalTime() < p.getArrivalTime()){
 								processes[i].setWaitingTime(processes[i].getWaitingTime() + burst);
 							}
+							else
+							processes[i].setWaitingTime(currentTime - processes[i].getArrivalTime());
+						}
+						else{
+							processes[i].setWaitingTime(processes[i].getWaitingTime() + burst);
 						}
 					}
+				}
 				}
 			}
 
@@ -210,7 +222,7 @@ public class Feedback{
 
 			p.calculateTimeRemaining(burst);
 
-			p.setActiveTimes(activeStart+(quantum*3), activeFinish);
+			p.setActiveTimes(activeStart, activeFinish);
 			//if finished set finish time else add to next queue
 			if(p.getTimeRemaining()==0){
 				p.setFinishTime(currentTime);
@@ -253,16 +265,20 @@ public class Feedback{
 			//update waiting times for other processes
 			for(int i = 0; i < processes.length; i++){
 				if(!(processes[i].equals(process))){
-					if(processes[i].getFinishTime() == 0){
-						if(currentTime >= processes[i].getArrivalTime()){
-							if(processes[i].getWaitingTime() == 0){
-								processes[i].setWaitingTime(currentTime - processes[i].getArrivalTime());
-							}
-							else{
+				if(processes[i].getFinishTime() == 0){
+					if(currentTime >= processes[i].getArrivalTime()){
+						if(processes[i].getWaitingTime() == 0){
+							if(processes[i].getArrivalTime() < process.getArrivalTime()){
 								processes[i].setWaitingTime(processes[i].getWaitingTime() + burstTime);
 							}
+							else
+							processes[i].setWaitingTime(currentTime - processes[i].getArrivalTime());
+						}
+						else{
+							processes[i].setWaitingTime(processes[i].getWaitingTime() + burstTime);
 						}
 					}
+				}
 				}
 			}
 			//update active time
