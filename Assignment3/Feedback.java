@@ -100,6 +100,8 @@ public class Feedback{
 
 
 			p.calculateTimeRemaining(burst);
+			
+			p.setActiveTimes(activeStart, activeFinish);
 			//if finished set finish time else add to next queue
 			if(p.getTimeRemaining()==0){
 				p.setFinishTime(currentTime);
