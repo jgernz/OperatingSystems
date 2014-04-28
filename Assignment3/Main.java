@@ -272,17 +272,6 @@ public class Main extends JPanel {
 		Process[] r1 = r.scheduleProcesses();
 		Process[] srt1 = srt.shortProcSRT(copy3);
 		Process[] fcfs1 = fcfs.ShortProc(copy4);
-
-		//Print outs of each of the Processes returned
-		System.out.println(Arrays.toString(s1));
-		System.out.println("\n");
-		System.out.println(Arrays.toString(f1));
-		System.out.println("\n");
-		System.out.println(Arrays.toString(r1));
-		System.out.println("\n");
-		System.out.println(Arrays.toString(srt1));
-		System.out.println("\n");
-		System.out.println(Arrays.toString(fcfs1));
 		
 		ArrayList returned1 = new ArrayList();
 		ArrayList returned2 = new ArrayList();
@@ -334,63 +323,89 @@ public class Main extends JPanel {
 			totalWaitingTime5 = totalWaitingTime5 + (int)((ArrayList) returned5.get(i)).get(4);
 		}
 
-		int totalTurnaroundTime1 = 0;
-		int totalTurnaroundTime2 = 0;
-		int totalTurnaroundTime3 = 0;
-		int totalTurnaroundTime4 = 0;
-		int totalTurnaroundTime5 = 0;
+		int averageTurnaroundTime1 = 0;
+		int averageTurnaroundTime2 = 0;
+		int averageTurnaroundTime3 = 0;
+		int averageTurnaroundTime4 = 0;
+		int averageTurnaroundTime5 = 0;
 
 		for(int i = 0; i<s1.length; i++){
-			totalTurnaroundTime1 += (s1[i].getFinishTime() - s1[i].getArrivalTime());
+			averageTurnaroundTime1 += (s1[i].getServiceTime() + s1[i].getWaitingTime());//s1[i].getTurnaroundTime();//(s1[i].getFinishTime() - s1[i].getArrivalTime());
 		}
 
-		totalTurnaroundTime1 = totalTurnaroundTime1/r1.length;
+		averageTurnaroundTime1 = averageTurnaroundTime1/r1.length;
 		
 		for(int i = 0; i<r1.length; i++){
-			totalTurnaroundTime2 += (r1[i].getFinishTime() - r1[i].getArrivalTime());
+			averageTurnaroundTime2 += (r1[i].getServiceTime() + r1[i].getWaitingTime());
 		}
 
-		totalTurnaroundTime2 = totalTurnaroundTime2/r1.length;
+		averageTurnaroundTime2 = averageTurnaroundTime2/r1.length;
 		
 		for(int i = 0; i<f1.length; i++){		
-			totalTurnaroundTime3 += (f1[i].getFinishTime() - f1[i].getArrivalTime());
+			averageTurnaroundTime3 += (f1[i].getServiceTime() + f1[i].getWaitingTime());
 		}
 
-		totalTurnaroundTime3 = totalTurnaroundTime3/f1.length;
+		averageTurnaroundTime3 = averageTurnaroundTime3/f1.length;
 		
 		for(int i = 0; i<srt1.length; i++){		
-			totalTurnaroundTime4 += (srt1[i].getFinishTime() - srt1[i].getArrivalTime());
+			averageTurnaroundTime4 += (srt1[i].getServiceTime() + srt1[i].getWaitingTime());
 		}
 
-		totalTurnaroundTime4 = totalTurnaroundTime4/srt1.length;
+		averageTurnaroundTime4 = averageTurnaroundTime4/srt1.length;
 		
 		for(int i = 0; i<fcfs1.length; i++){		
-			totalTurnaroundTime5 += (fcfs1[i].getFinishTime() - fcfs1[i].getArrivalTime());
+			averageTurnaroundTime5 += (fcfs1[i].getServiceTime() + fcfs1[i].getWaitingTime());
 		}
 
-		totalTurnaroundTime5 = totalTurnaroundTime5/fcfs1.length;
+		averageTurnaroundTime5 = averageTurnaroundTime5/fcfs1.length;
 		
+		
+		//Print outs of each of the Processes returned
+		System.out.println(Arrays.toString(s1));
+		System.out.println("Average Waiting Time: " + totalWaitingTime1/s1.length);
+		System.out.println("Average Turnaround Time: " + averageTurnaroundTime1);
+		System.out.println("\n");
+		
+		System.out.println(Arrays.toString(f1));
+		System.out.println("Average Waiting Time: " + totalWaitingTime2/f1.length);
+		System.out.println("Average Turnaround Time: " + averageTurnaroundTime2);
+		System.out.println("\n");
+		
+		System.out.println(Arrays.toString(r1));
+		System.out.println("Average Waiting Time: " + totalWaitingTime3/r1.length);
+		System.out.println("Average Turnaround Time: " + averageTurnaroundTime3);
+		System.out.println("\n");
+		
+		System.out.println(Arrays.toString(srt1));
+		System.out.println("Average Waiting Time: " + totalWaitingTime4/srt1.length);
+		System.out.println("Average Turnaround Time: " + averageTurnaroundTime4);
+		System.out.println("\n");
+		
+		System.out.println(Arrays.toString(fcfs1));
+		System.out.println("Average Waiting Time: " + totalWaitingTime5/fcfs1.length);
+		System.out.println("Average Turnaround Time: " + averageTurnaroundTime5);
+		System.out.println("\n");
 		
 		
 		send.sending(returned1);
 		send.sendWait(totalWaitingTime1);
-		send.sendTurnaround(totalTurnaroundTime1);
+		send.sendTurnaround(averageTurnaroundTime1);
 		
 		send2.sending(returned2);
 		send2.sendWait(totalWaitingTime2);
-		send2.sendTurnaround(totalTurnaroundTime2);
+		send2.sendTurnaround(averageTurnaroundTime2);
 
 		send3.sending(returned3);
 		send3.sendWait(totalWaitingTime3);
-		send3.sendTurnaround(totalTurnaroundTime3);
+		send3.sendTurnaround(averageTurnaroundTime3);
 
 		send4.sending(returned4);
 		send4.sendWait(totalWaitingTime4);
-		send4.sendTurnaround(totalTurnaroundTime4);
+		send4.sendTurnaround(averageTurnaroundTime4);
 
 		send5.sending(returned5);
 		send5.sendWait(totalWaitingTime5);
-		send5.sendTurnaround(totalTurnaroundTime5);
+		send5.sendTurnaround(averageTurnaroundTime5);
 
 		JFrame frame = new JFrame();
 		frame.setTitle("Process Simulator 2014");
