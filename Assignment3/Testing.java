@@ -224,8 +224,8 @@ public class Testing extends JPanel {
 
 		//------------------------------------------
 		s = new SPN();		
-		f = new Feedback(copy1, 50);
-		r = new RoundRobin(copy2, 50);
+		f = new Feedback(copy1, 17);
+		r = new RoundRobin(copy2, 17);
 		srt = new SRT();
 		fcfs = new FCFS();
 
